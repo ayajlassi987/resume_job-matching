@@ -1,0 +1,51 @@
+@startuml
+title AI-Resume-Interview-Copilot Architecture
+
+package "App" {
+  [app.py] as APP
+}
+
+package "Src Modules" {
+  [resume_parser.py]
+  [skill_extractor.py]
+  [embedding_engine.py]
+  [matcher.py]
+  [rag_engine.py]
+  [llm_engine.py]
+  [interview_copilot.py]
+}
+
+folder "Vector Store" {
+  folder "faiss_index" {
+    file "index.faiss"
+    file "embeddings.npy"
+    file "meta.json"
+  }
+}
+
+database "Data" {
+  file "data/resumes/*.txt"
+  file "data/job_descriptions/*.txt"
+  file "data/interview_questions/questions.txt"
+}
+
+APP --> resume_parser.py : parse resume
+resume_parser.py --> skill_extractor.py : extract skills
+matcher.py --> embedding_engine.py : build/search index
+rag_engine.py --> embedding_engine.py : retrieve questions
+rag_engine.py --> llm_engine.py : generate questions (RAG prompt)
+interview_copilot.py --> rag_engine.py : uses retrieval + generation
+embedding_engine.py --> Vector Store : persist/load index
+APP --> matcher.py : resume -> job matching
+APP --> interview_copilot.py : start interview session
+
+note right of rag_engine.py
+  RAG Prompt structure:
+  "You are a professional interviewer.\n\n"
+  "Candidate Resume:\n{resume}\n\n"
+  "Job Description:\n{job}\n\n"
+  "Relevant Interview Questions:\n{retrieved_questions}\n\n"
+  "Generate 5 tailored interview questions."
+end note
+
+@enduml

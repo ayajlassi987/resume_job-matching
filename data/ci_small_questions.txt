@@ -1,0 +1,6 @@
+What is your experience with data warehousing?
+Describe a time you improved ETL performance.
+How do you ensure data quality in pipelines?
+Tell me about a complex SQL query you optimized.
+How do you approach debugging data pipeline failures?
+What is your familiarity with cloud data platforms (e.g., Snowflake, BigQuery)?
