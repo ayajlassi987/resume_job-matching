@@ -63,27 +63,13 @@ def extract_skills(
     
     found_skills = set()
     text_lower = text.lower()
-    text_words = set(re.findall(r'\b\w+\b', text_lower))  # All words in text
     
     # Method 1: Exact keyword matching (primary method - most reliable)
-    # Only match skills that appear as complete words/phrases in the text
     for skill in SKILLS:
-        skill_lower = skill.lower().strip()
-        
-        # Skip very short skills (less than 2 chars) to avoid false matches
-        if len(skill_lower) < 2:
-            continue
-            
-        # For single-word skills, require exact word match
-        if ' ' not in skill_lower:
-            if skill_lower in text_words:
-                found_skills.add(skill)
-        else:
-            # For multi-word skills, require the full phrase to appear
-            # Use word boundaries to ensure it's a complete phrase
-            pattern = r'\b' + re.escape(skill_lower) + r'\b'
-            if re.search(pattern, text_lower):
-                found_skills.add(skill)
+        skill_lower = skill.lower()
+        # Check for word boundary matches only
+        if re.search(r'\b' + re.escape(skill_lower) + r'\b', text_lower):
+            found_skills.add(skill)
     
     # Method 2: NER-based extraction (only if enabled and skill list exists)
     if use_ner and nlp and SKILLS:

@@ -2,7 +2,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-def match(resumes, jobs, top_k=5):
+def match(resumes, jobs, top_k=3):
     """
     Match resumes to job descriptions using TF-IDF cosine similarity
     Returns a list of tuples (job_index, score) for each resume

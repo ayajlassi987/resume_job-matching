@@ -233,6 +233,9 @@ python scripts/monitor.py
 - [Deployment Guide](docs/DEPLOYMENT.md) - Deployment instructions
 - [Architecture](docs/ARCHITECTURE.md) - System architecture details
 
+## CI / Reproducibility
+
+A GitHub Actions workflow is included to run tests using local embeddings (no API keys required). See `.github/workflows/ci.yml`.
 
 ## Project Structure
 

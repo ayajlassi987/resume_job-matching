@@ -60,14 +60,11 @@ class AnswerEvaluator:
         
         # Extract skills from answer - use strict matching only (no NER, no fuzzy)
         # This prevents hallucination of random words
-        # Only extract skills that are clearly mentioned in the answer
         answer_skills = extract_skills(
             candidate_answer,
             use_ner=False,  # Disable NER to avoid hallucinations
             use_fuzzy=False  # Disable fuzzy matching to avoid hallucinations
         )
-        
-        # Store extracted skills from answer only
         results["extracted_skills"] = answer_skills
         
         # Semantic similarity scoring

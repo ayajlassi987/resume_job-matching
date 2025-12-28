@@ -349,13 +349,10 @@ elif page == "✅ Answer Evaluation":
                 with col5:
                     st.metric("Completeness", f"{data.get('completeness_score', 0) * 100:.1f}%")
                 
-                # Extracted skills from answer only
-                st.subheader("Extracted Skills")
-                answer_skills = data.get("extracted_skills", [])
-                if answer_skills:
-                    st.write(", ".join(answer_skills))
-                else:
-                    st.write("*No skills found in answer*")
+                # Extracted skills
+                if data.get("extracted_skills"):
+                    st.subheader("Extracted Skills")
+                    st.write(", ".join(data["extracted_skills"]))
                 
                 # Keywords
                 col1, col2 = st.columns(2)
